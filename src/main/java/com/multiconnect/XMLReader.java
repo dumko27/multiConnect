@@ -2,31 +2,29 @@ package com.multiconnect;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
-import javax.sound.midi.Patch;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class XMLReader {
 
     public static void main(String argv[]) throws IOException {
+        Logger logger = LoggerFactory.getLogger(XMLReader.class);
         String patch = "/home/DN270791NDI/NetBeansProjects/MultiConnect/TestXML";
+        logger.debug("patch={}.", patch);
+        logger.info("patch={}.", patch);
         parseAllFiles(patch);
     }
 
     public static void parseAllFiles(String parentDirectory) throws IOException {
         File[] filesInDirectory = new File(parentDirectory).listFiles();
         File dir = new File("/home/DN270791NDI/NetBeansProjects/MultiConnect/GoodXML");
-            dir.mkdirs();
+        dir.mkdirs();
         for (File file : filesInDirectory) {
             if (file.isDirectory()) {
                 System.out.println("Name directory=" + file.getName());
