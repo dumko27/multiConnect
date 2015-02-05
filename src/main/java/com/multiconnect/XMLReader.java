@@ -1,30 +1,40 @@
 package com.multiconnect;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import javax.activation.MimetypesFileTypeMap;
+import javax.sound.midi.Patch;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class XMLReader {
 
-    public static void main(String argv[]) {
-        parseAllFiles("/home/DN270791NDI/NetBeansProjects/MultiConnect/TestXML");
+    public static void main(String argv[]) throws IOException {
+        String patch = "/home/DN270791NDI/NetBeansProjects/MultiConnect/TestXML";
+        parseAllFiles(patch);
     }
 
-    public static void parseAllFiles(String parentDirectory) {
+    public static void parseAllFiles(String parentDirectory) throws IOException {
         File[] filesInDirectory = new File(parentDirectory).listFiles();
+        File dir = new File("/home/DN270791NDI/NetBeansProjects/MultiConnect/GoodXML");
+            dir.mkdirs();
         for (File file : filesInDirectory) {
             if (file.isDirectory()) {
                 System.out.println("Name directory=" + file.getName());
+                parseAllFiles(file.getAbsolutePath());
             } else if (file.isFile()) {
                 System.out.println("Name file=" + file.getName());
                 parsingXML(file.getAbsolutePath());
+                file.renameTo(new File(dir, file.getName()));
             }
         }
     }
